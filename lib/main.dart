@@ -31,29 +31,39 @@ class HeheExDeState extends State {
 
   int xdQuestionIndex = 0;
 
-  void buttonPressedd() {
+  void answerButtonPressed() {
     setState(() {
-      xdQuestionIndex = xdQuestionIndex >= xdQuestions.length - 1
-          ? xdQuestions.length - 1
-          : xdQuestionIndex + 1;
+      ++xdQuestionIndex;
+    });
+  }
+
+  void restartButtonPressed() {
+    setState(() {
+      xdQuestionIndex = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text("MyExDeApp"),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("MyExDeApp"),
+        ),
+        body: xdQuestionIndex < xdQuestions.length
+            ? 
+            : Center(
+                child: Column(
+                  children: [
+                    Text("XDDD"),
+                    ElevatedButton(
+                      onPressed: restartButtonPressed,
+                      child: Text("Restart!"),
+                    )
+                  ],
+                ),
+              ),
       ),
-      body: Column(
-        children: [
-          Flex(direction: Axis.horizontal),
-          Question(xdQuestions[xdQuestionIndex]["question"] as String),
-          ...(xdQuestions[xdQuestionIndex]["asnwer"] as List<String>)
-              .map((e) => Answer(e, buttonPressedd))
-        ],
-      ),
-    ));
+    );
   }
 }

@@ -14,19 +14,33 @@ class HeheExDe extends StatefulWidget {
 }
 
 class HeheExDeState extends State {
+  List<Map<String, Object>> xdQuestions = [
+    {
+      "question": "Benis :DDDDDDDDDD",
+      "asnwer": ["yes", "no", "maybe"],
+    },
+    {
+      "question": "Do you drink water?",
+      "asnwer": ["yes", "no", "maybe"],
+    },
+    {
+      "question": "yes",
+      "asnwer": ["yes", "no", "maybe"],
+    },
+  ];
+
   int xdQuestionIndex = 0;
 
   void buttonPressedd() {
     setState(() {
-      xdQuestionIndex = 1;
+      xdQuestionIndex = xdQuestionIndex >= xdQuestions.length - 1
+          ? xdQuestions.length - 1
+          : xdQuestionIndex + 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> xdQuestions = ["benis", ":DDDD"];
-    List<String> xdAnswers = ["yes", "no", "maybe"];
-
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -35,10 +49,9 @@ class HeheExDeState extends State {
       body: Column(
         children: [
           Flex(direction: Axis.horizontal),
-          Question(xdQuestions[xdQuestionIndex]),
-          Answer(xdAnswers[0], buttonPressedd),
-          Answer(xdAnswers[1], buttonPressedd),
-          Answer(xdAnswers[2], buttonPressedd)
+          Question(xdQuestions[xdQuestionIndex]["question"] as String),
+          ...(xdQuestions[xdQuestionIndex]["asnwer"] as List<String>)
+              .map((e) => Answer(e, buttonPressedd))
         ],
       ),
     ));

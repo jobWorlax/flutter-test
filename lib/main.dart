@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/answer.dart';
-import 'package:hello_world/question.dart';
+
+import 'package:hello_world/quiz.dart';
+import 'package:hello_world/result.dart';
 
 void main() {
   runApp(HeheExDe());
@@ -17,29 +18,44 @@ class HeheExDeState extends State {
   List<Map<String, Object>> xdQuestions = [
     {
       "question": "Benis :DDDDDDDDDD",
-      "asnwer": ["yes", "no", "maybe"],
+      "asnwer": [
+        {"text": "yes", "madness": 2},
+        {"text": "no", "madness": 1},
+        {"text": "maybe", "madness": 3},
+      ],
     },
     {
       "question": "Do you drink water?",
-      "asnwer": ["yes", "no", "maybe"],
+      "asnwer": [
+        {"text": "no", "madness": 1},
+        {"text": "no", "madness": 1},
+        {"text": "maybe", "madness": 3},
+      ],
     },
     {
       "question": "yes",
-      "asnwer": ["yes", "no", "maybe"],
+      "asnwer": [
+        {"text": "y", "madness": 1},
+        {"text": "e", "madness": 2},
+        {"text": "s", "madness": 3},
+      ],
     },
   ];
 
-  int xdQuestionIndex = 0;
+  int questionIndex = 0;
+  int _totalMadness = 0;
 
-  void answerButtonPressed() {
+  void answerButtonPressed(int madness) {
+    _totalMadness += madness;
+
     setState(() {
-      ++xdQuestionIndex;
+      ++questionIndex;
     });
   }
 
   void restartButtonPressed() {
     setState(() {
-      xdQuestionIndex = 0;
+      questionIndex = 0;
     });
   }
 
@@ -50,19 +66,9 @@ class HeheExDeState extends State {
         appBar: AppBar(
           title: Text("MyExDeApp"),
         ),
-        body: xdQuestionIndex < xdQuestions.length
-            ? 
-            : Center(
-                child: Column(
-                  children: [
-                    Text("XDDD"),
-                    ElevatedButton(
-                      onPressed: restartButtonPressed,
-                      child: Text("Restart!"),
-                    )
-                  ],
-                ),
-              ),
+        body: questionIndex <= xdQuestions.length - 1
+            ? Quiz(xdQuestions, answerButtonPressed, questionIndex)
+            : Results(restartButtonPressed),
       ),
     );
   }

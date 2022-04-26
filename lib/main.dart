@@ -56,6 +56,7 @@ class HeheExDeState extends State {
   void restartButtonPressed() {
     setState(() {
       questionIndex = 0;
+      _totalMadness = 0;
     });
   }
 
@@ -68,7 +69,7 @@ class HeheExDeState extends State {
         ),
         body: questionIndex <= xdQuestions.length - 1
             ? Quiz(xdQuestions, answerButtonPressed, questionIndex)
-            : Results(restartButtonPressed),
+            : Results(restartButtonPressed, _totalMadness),
       ),
     );
   }
